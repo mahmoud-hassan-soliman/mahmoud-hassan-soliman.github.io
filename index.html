@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahmoud Hassan | Automation & AI Specialist</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0a0d12;
+      color: #f5f7fa;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    nav {
+      padding: 25px 0;
+      border-bottom: 1px solid #222936;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav strong {
+      font-size: 20px;
+    }
+
+    nav a {
+      color: #9ca7b7;
+      margin-left: 25px;
+    }
+
+    nav a:hover {
+      color: #7dd3fc;
+    }
+
+    .hero {
+      padding: 120px 0 100px;
+    }
+
+    .tag {
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(45px, 8vw, 80px);
+      line-height: 1.05;
+      margin: 20px 0;
+      max-width: 900px;
+    }
+
+    h1 span {
+      color: #7dd3fc;
+    }
+
+    .hero p {
+      color: #9ca7b7;
+      font-size: 21px;
+      max-width: 750px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 13px 22px;
+      border: 1px solid #344052;
+      border-radius: 10px;
+      background: #151b25;
+    }
+
+    section {
+      padding: 80px 0;
+      border-top: 1px solid #222936;
+    }
+
+    h2 {
+      font-size: 34px;
+      margin-bottom: 30px;
+    }
+
+    .about {
+      max-width: 800px;
+      color: #aeb8c6;
+      font-size: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #111720;
+      border: 1px solid #252e3b;
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .card h3 {
+      font-size: 21px;
+      margin: 10px 0;
+    }
+
+    .card p {
+      color: #9ca7b7;
+    }
+
+    .number {
+      color: #7dd3fc;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill {
+      padding: 9px 14px;
+      border: 1px solid #293342;
+      border-radius: 30px;
+      color: #cbd5e1;
+      background: #10151d;
+    }
+
+    .contact {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .contact a {
+      padding: 12px 18px;
+      border: 1px solid #293342;
+      border-radius: 10px;
+    }
+
+    footer {
+      padding: 35px 0;
+      color: #667384;
+      font-size: 14px;
+    }
+
+    @media (max-width: 750px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav .links {
+        display: none;
+      }
+
+      .hero {
+        padding: 80px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="container">
+      <strong>Mahmoud Hassan</strong>
+
+      <div class="links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <header class="hero container">
+      <div class="tag">Automation & AI Specialist · Freelance Portfolio</div>
+
+      <h1>
+        Building practical
+        <span>automation systems</span>
+        for real workflows.
+      </h1>
+
+      <p>
+        I build practical AI, workflow, and data systems that connect tools,
+        reduce repetitive work, and turn fragmented processes into repeatable operations.
+      </p>
+
+      <a class="button" href="#projects">
+        View Selected Work →
+      </a>
+    </header>
+
+
+    <section id="about">
+      <div class="container">
+        <h2>About</h2>
+
+        <p class="about">
+          I'm Mahmoud Hassan, a Computer Engineering student at
+          Egypt-Japan University of Science and Technology (E-JUST),
+          expected to graduate in 2027. My work focuses on practical
+          automation using n8n, Google Sheets, APIs, AI models, and
+          structured data processing. I combine engineering foundations
+          with business-oriented workflows to build systems that are
+          useful, understandable, and maintainable.
+        </p>
+      </div>
+    </section>
+
+
+    <section id="services">
+      <div class="container">
+        <h2>Services</h2>
+
+        <div class="grid">
+
+          <div class="card">
+            <div class="number">01</div>
+            <h3>Workflow Automation</h3>
+            <p>
+              Automate repetitive operational tasks and connect the tools
+              involved in a business process.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="number">02</div>
+            <h3>AI-Powered Workflows</h3>
+            <p>
+              Integrate AI models into structured workflows with clear
+              inputs, outputs, and validation.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="number">03</div>
+            <h3>Data & API Integration</h3>
+            <p>
+              Connect APIs, spreadsheets, databases, and business systems
+              to streamline data flow.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section id="projects">
+      <div class="container">
+        <h2>Selected Projects</h2>
+
+        <div class="grid">
+
+          <div class="card">
+            <div class="number">AI · AUTOMATION</div>
+            <h3>AI Resume Automation System</h3>
+            <p>
+              An n8n pipeline using Google Sheets, APIs, OpenRouter AI,
+              and LaTeX to analyze job descriptions and tailor resumes
+              while preserving factual accuracy and formatting.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="number">AI · OPERATIONS</div>
+            <h3>AI Message Processor</h3>
+            <p>
+              An automation that reads customer messages from Google Sheets,
+              processes them through an AI API, parses structured JSON,
+              and updates the records with classification results.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="number">DATA ENGINEERING</div>
+            <h3>Job Market Data Pipeline</h3>
+            <p>
+              A graduation project pipeline for collecting job-market data
+              through the JSearch API, processing the data, storing it,
+              and preparing it for analysis.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="container">
+        <h2>Technical Skills</h2>
+
+        <div class="skills">
+          <span class="skill">n8n</span>
+          <span class="skill">Google Sheets</span>
+          <span class="skill">APIs</span>
+          <span class="skill">AI Automation</span>
+          <span class="skill">Data Engineering</span>
+          <span class="skill">Python</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">SQL</span>
+          <span class="skill">C++</span>
+          <span class="skill">Angular</span>
+          <span class="skill">MATLAB</span>
+          <span class="skill">Structured Data</span>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="contact">
+      <div class="container">
+        <h2>Let's build something useful.</h2>
+
+        <p class="about">
+          Have a repetitive workflow, disconnected tools, or a process
+          that needs automation? Let's turn it into a practical system.
+        </p>
+
+        <div class="contact">
+          <a href="https://github.com/mahmoud-hassan-soliman" target="_blank">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="container">
+      © 2026 Mahmoud Hassan · Automation & AI Specialist
+    </div>
+  </footer>
+
+</body>
+</html>
