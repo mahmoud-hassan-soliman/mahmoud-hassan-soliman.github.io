@@ -85,6 +85,31 @@ h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;fon
 .pillars dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 .pillars dd{margin:0;font-size:.92rem;color:var(--muted);line-height:1.5}
 
+/* Hero visual column */
+.hero-visual{display:grid;gap:18px;min-width:0}
+
+/* Profile card (photo) */
+.profile{display:flex;align-items:center;gap:24px;padding:18px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.07);transition:border-color .3s}
+.profile:hover{border-color:var(--border-2)}
+.photo-wrap{position:relative;isolation:isolate;flex:none;width:136px}
+.photo-wrap::before{content:"";position:absolute;inset:-14px;z-index:-1;border-radius:34px;background:var(--grad);filter:blur(30px);opacity:.26;transition:opacity .4s;animation:glow 6s ease-in-out infinite}
+.photo-wrap:hover::before{opacity:.4}
+@keyframes glow{50%{opacity:.4}}
+.photo{width:100%;aspect-ratio:4/5;border-radius:22px;padding:2px;background:linear-gradient(150deg,var(--accent),rgba(255,255,255,.12) 45%,var(--accent-2))}
+.photo-in{position:relative;width:100%;height:100%;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,#131a2b,#0a0e17);display:grid;place-items:center}
+.photo-in .ini{font:700 2rem var(--mono);letter-spacing:-.04em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.photo-in img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:transform .8s var(--ease)}
+.photo-wrap:hover .photo-in img{transform:scale(1.04)}
+.photo-in::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(7,9,15,.35),transparent 45%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.who{min-width:0}
+.who .role{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.who strong{display:block;font-size:1.2rem;letter-spacing:-.025em;line-height:1.25}
+.who p{color:var(--muted);font-size:.9rem;line-height:1.5;margin-top:8px}
+.who a{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:.88rem;font-weight:600;color:var(--text);transition:color .2s}
+.who a:hover{color:var(--accent)}
+.who a svg{width:14px;height:14px;transition:transform .25s var(--ease)}
+.who a:hover svg{transform:translateX(3px)}
+
 /* Flow visual */
 .flow{border:1px solid var(--border);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:22px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.07)}
 .flow-bar{display:flex;align-items:center;gap:7px;margin-bottom:22px;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
@@ -180,7 +205,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   section{padding:84px 0}
   .hero-grid,.about-grid{grid-template-columns:1fr;gap:44px}
   .cards,.skill-groups{grid-template-columns:1fr}
-  .flow{max-width:480px}
+  .hero-visual{max-width:520px}
 }
 @media (max-width:820px){
   .burger{display:grid}
@@ -198,6 +223,17 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   .focus,.job ul{grid-template-columns:1fr}
   .cta{padding:52px 24px}
   .hero-cta .btn,.contact-row .btn{width:100%;justify-content:center}
+  .profile{gap:18px;padding:14px}
+  .photo-wrap{width:104px}
+  .photo,.photo-in{border-radius:18px}
+  .photo-in{border-radius:16px}
+  .who strong{font-size:1.08rem}
+  .who p{font-size:.86rem}
+}
+@media (max-width:380px){
+  .photo-wrap{width:88px}
+  .profile{gap:14px}
+  .who .role{font-size:.66rem;letter-spacing:.08em}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -245,17 +281,37 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
         </dl>
       </div>
 
-      <div class="flow reveal" style="--d:.2s" role="img" aria-label="Diagram of an automation pipeline: Google Sheets trigger, n8n workflow, AI model, validated output written back to Sheets">
-        <div class="flow-bar"><i></i><i></i><i></i><span>pipeline.workflow</span></div>
-        <div class="node"><div class="ic">01</div><div><strong>Google Sheets</strong><small>New row / trigger</small></div></div>
-        <div class="link"></div>
-        <div class="node"><div class="ic">02</div><div><strong>n8n workflow</strong><small>Orchestration & API calls</small></div></div>
-        <div class="link"></div>
-        <div class="node"><div class="ic">03</div><div><strong>AI model</strong><small>Structured prompt → JSON</small></div></div>
-        <div class="link"></div>
-        <div class="node"><div class="ic">04</div><div><strong>Parse & validate</strong><small>Schema checks, error handling</small></div></div>
-        <div class="link"></div>
-        <div class="node"><div class="ic">05</div><div><strong>Records updated</strong><small>Clean data, back in your sheet</small></div></div>
+      <div class="hero-visual">
+        <!-- PROFILE PHOTO: place your image at assets/profile.jpg (recommended: portrait 4:5, e.g. 800×1000px, under ~200 KB) -->
+        <div class="profile reveal" style="--d:.2s">
+          <div class="photo-wrap">
+            <div class="photo">
+              <div class="photo-in">
+                <span class="ini" aria-hidden="true">MH</span>
+                <img src="assets/profile.jpg" alt="Portrait of Mahmoud Hassan" width="800" height="1000" fetchpriority="high" decoding="async" onerror="this.style.display='none'">
+              </div>
+            </div>
+          </div>
+          <div class="who">
+            <span class="role">Automation & AI Specialist</span>
+            <strong>Mahmoud Hassan</strong>
+            <p>Computer Engineering student at E-JUST · Expected graduation 2027</p>
+            <a href="#contact">Get in touch <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+          </div>
+        </div>
+
+        <div class="flow reveal" style="--d:.32s" role="img" aria-label="Diagram of an automation pipeline: Google Sheets trigger, n8n workflow, AI model, validated output written back to Sheets">
+          <div class="flow-bar"><i></i><i></i><i></i><span>pipeline.workflow</span></div>
+          <div class="node"><div class="ic">01</div><div><strong>Google Sheets</strong><small>New row / trigger</small></div></div>
+          <div class="link"></div>
+          <div class="node"><div class="ic">02</div><div><strong>n8n workflow</strong><small>Orchestration & API calls</small></div></div>
+          <div class="link"></div>
+          <div class="node"><div class="ic">03</div><div><strong>AI model</strong><small>Structured prompt → JSON</small></div></div>
+          <div class="link"></div>
+          <div class="node"><div class="ic">04</div><div><strong>Parse & validate</strong><small>Schema checks, error handling</small></div></div>
+          <div class="link"></div>
+          <div class="node"><div class="ic">05</div><div><strong>Records updated</strong><small>Clean data, back in your sheet</small></div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -475,6 +531,10 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
       c.style.setProperty('--my',(e.clientY-r.top)+'px');
     });
   });
+
+  // Profile photo fallback (shows "MH" monogram if assets/profile.jpg is missing)
+  var photo=d.querySelector('.photo-in img');
+  if(photo && photo.complete && photo.naturalWidth===0){photo.style.display='none'}
 
   d.getElementById('year').textContent=new Date().getFullYear();
 })();
