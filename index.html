@@ -27,8 +27,9 @@
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(700px 420px at 12% -5%,rgba(109,140,255,.16),transparent 70%),radial-gradient(600px 400px at 95% 8%,rgba(69,224,184,.11),transparent 70%)}
+body::before{content:"";position:fixed;inset:-220px 0;z-index:-1;pointer-events:none;
+  background:radial-gradient(700px 420px at 12% 180px,rgba(109,140,255,.16),transparent 70%),radial-gradient(600px 400px at 95% 270px,rgba(69,224,184,.11),transparent 70%);
+  transform:translate3d(0,calc(var(--sy,0)*-.12px),0)}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
   background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
   background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 50% 0,#000 0,transparent 65%);mask-image:radial-gradient(ellipse at 50% 0,#000 0,transparent 65%)}
@@ -39,13 +40,20 @@ h1,h2,h3,p{margin:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 .skip{position:absolute;left:12px;top:-60px;background:var(--accent);color:#04120e;padding:10px 16px;border-radius:10px;font-weight:600;z-index:200;transition:top .2s}
 .skip:focus{top:12px}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:150;background:var(--grad);transform-origin:0 50%;transform:scaleX(var(--sp,0));pointer-events:none}
 .wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
 section{padding:112px 0;position:relative}
 .eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.eyebrow::before{content:"";width:28px;height:1px;background:var(--accent)}
+.eyebrow::before{content:"";width:0;height:1px;background:var(--accent);transition:width .9s var(--ease) .15s}
+.in .eyebrow::before{width:28px}
 h2{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;letter-spacing:-.03em;font-weight:700;max-width:20ch}
 .lead{color:var(--muted);max-width:60ch;margin-top:18px}
 .sec-head{margin-bottom:56px}
+
+/* Split-word heading reveal */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .05em .14em;margin:0 -.05em -.14em}
+.split .w>span{display:inline-block;translate:0 118%;transition:translate .95s var(--ease);transition-delay:calc(var(--i,0)*60ms + .1s)}
+.in .split .w>span{translate:none}
 
 /* Nav */
 header{position:fixed;inset:0 0 auto;z-index:100;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
@@ -74,6 +82,7 @@ header.scrolled{background:rgba(7,9,15,.72);-webkit-backdrop-filter:blur(16px) s
 /* Hero */
 .hero{min-height:100svh;display:flex;align-items:center;padding:140px 0 90px}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero-copy{transform:translate3d(0,calc(var(--hp,0)*-40px),0);opacity:calc(1 - var(--hp,0)*.85)}
 .badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:.84rem;color:var(--muted);margin-bottom:28px}
 .badge b{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(69,224,184,.6);animation:pulse 2.2s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(69,224,184,0)}100%{box-shadow:0 0 0 0 rgba(69,224,184,0)}}
@@ -84,9 +93,13 @@ h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;fon
 .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;padding-top:28px;border-top:1px solid var(--border)}
 .pillars dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 .pillars dd{margin:0;font-size:.92rem;color:var(--muted);line-height:1.5}
+.cue{position:absolute;left:50%;bottom:26px;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:10px;font:.66rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--dim);opacity:calc(1 - var(--hp,0)*4);transition:color .2s}
+.cue:hover{color:var(--accent)}
+.cue i{display:block;width:1px;height:38px;background:var(--border-2);position:relative;overflow:hidden}
+.cue i::after{content:"";position:absolute;left:0;top:-100%;width:100%;height:100%;background:var(--accent);animation:travel 2s ease-in-out infinite}
 
 /* Hero visual column */
-.hero-visual{display:grid;gap:18px;min-width:0}
+.hero-visual{display:grid;gap:18px;min-width:0;transform:translate3d(0,calc(var(--hp,0)*-80px),0);opacity:calc(1 - var(--hp,0)*.5)}
 
 /* Profile card (photo) */
 .profile{display:flex;align-items:center;gap:24px;padding:18px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.07);transition:border-color .3s}
@@ -115,9 +128,11 @@ h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;fon
 .flow-bar{display:flex;align-items:center;gap:7px;margin-bottom:22px;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
 .flow-bar i{width:10px;height:10px;border-radius:50%;background:var(--border-2)}
 .flow-bar span{margin-left:8px}
-.node{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:rgba(7,9,15,.55);position:relative;transition:border-color .3s,transform .3s var(--ease)}
+.node{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:rgba(7,9,15,.55);position:relative;transition:border-color .3s,transform .3s var(--ease),background .3s}
 .node:hover{border-color:var(--accent);transform:translateX(4px)}
-.node .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font:600 .78rem var(--mono);background:var(--surface-2);color:var(--accent);flex:none}
+.node .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font:600 .78rem var(--mono);background:var(--surface-2);color:var(--accent);flex:none;transition:background .3s,color .3s,box-shadow .3s}
+.node.on{border-color:rgba(69,224,184,.55);background:rgba(69,224,184,.06)}
+.node.on .ic{background:var(--accent);color:#04120e;box-shadow:0 0 22px -2px rgba(69,224,184,.6)}
 .node strong{display:block;font-size:.95rem;line-height:1.3}
 .node small{color:var(--dim);font-size:.8rem}
 .link{width:2px;height:22px;margin:0 0 0 33px;background:linear-gradient(var(--border-2),var(--border-2));position:relative;overflow:hidden}
@@ -174,9 +189,12 @@ h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;fon
 
 /* Experience */
 .timeline{position:relative;padding-left:34px;max-width:780px}
-.timeline::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--accent),transparent)}
+.timeline::before,.timeline::after{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px}
+.timeline::before{background:var(--border)}
+.timeline::after{background:linear-gradient(var(--accent),var(--accent-2));transform-origin:top;transform:scaleY(var(--tp,0))}
 .job{position:relative;padding:30px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
-.job::before{content:"";position:absolute;left:-34px;top:38px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 5px rgba(69,224,184,.12)}
+.job::before{content:"";position:absolute;left:-34px;top:38px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 5px rgba(69,224,184,.12);transition:background .5s .4s}
+.job.in::before{background:var(--accent)}
 .job h3{font-size:1.3rem;letter-spacing:-.02em}
 .job>p{color:var(--muted);margin:6px 0 20px}
 .job ul{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px}
@@ -185,7 +203,7 @@ h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;fon
 
 /* Contact */
 .cta{padding:72px 48px;border:1px solid var(--border-2);border-radius:28px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015))}
-.cta::before{content:"";position:absolute;width:520px;height:520px;left:50%;top:-320px;transform:translateX(-50%);background:radial-gradient(circle,rgba(109,140,255,.28),transparent 65%);pointer-events:none}
+.cta::before{content:"";position:absolute;width:520px;height:520px;left:50%;top:-320px;transform:translateX(-50%) translateY(calc(var(--cp,0)*130px - 40px));background:radial-gradient(circle,rgba(109,140,255,.28),transparent 65%);pointer-events:none}
 .cta>*{position:relative}
 .cta h2{margin:0 auto;max-width:18ch}
 .cta .lead{margin-inline:auto}
@@ -198,16 +216,31 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}
 .foot a:hover{color:var(--accent)}
 
-/* Reveal */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
-.reveal.in{opacity:1;transform:none}
-.no-js .reveal{opacity:1;transform:none}
+/* Reveal (uses individual transform properties so hover transforms keep working) */
+.reveal{--rv:opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s),scale .9s var(--ease) var(--d,0s);opacity:0;translate:0 28px;transition:var(--rv)}
+.reveal[data-reveal="left"]{translate:-48px 0}
+.reveal[data-reveal="right"]{translate:48px 0}
+.reveal[data-reveal="scale"]{translate:0 40px;scale:.94}
+.reveal.in{opacity:1;translate:none;scale:none}
+.card.reveal{transition:var(--rv),transform .35s var(--ease),border-color .35s,background .35s}
+.project.reveal{transition:var(--rv),transform .35s var(--ease),border-color .35s}
+.profile.reveal{transition:var(--rv),border-color .3s}
+
+/* Staggered children */
+.stagger.stagger>*{opacity:0;translate:0 16px;transition:opacity .6s var(--ease) calc(var(--i,0)*65ms),translate .6s var(--ease) calc(var(--i,0)*65ms),transform .25s var(--ease),border-color .25s,background .25s,color .2s}
+.stagger.in>*{opacity:1;translate:none}
+
+.no-js .reveal,.no-js .stagger>*{opacity:1;translate:none;scale:none}
+.no-js .split .w>span{translate:none}
+.no-js .eyebrow::before{width:28px}
+.no-js .timeline::after{transform:none}
 
 @media (max-width:960px){
   section{padding:84px 0}
   .hero-grid,.about-grid{grid-template-columns:1fr;gap:44px}
   .cards,.skill-groups{grid-template-columns:1fr}
   .hero-visual{max-width:520px}
+  .cue{display:none}
 }
 @media (max-width:820px){
   .burger{display:grid}
@@ -231,6 +264,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   .photo-in{border-radius:16px}
   .who strong{font-size:1.08rem}
   .who p{font-size:.86rem}
+  .reveal[data-reveal="left"],.reveal[data-reveal="right"]{translate:0 28px}
 }
 @media (max-width:380px){
   .photo-wrap{width:88px}
@@ -239,13 +273,18 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .reveal,.stagger>*{opacity:1;translate:none;scale:none}
+  .split .w>span{translate:none}
+  .eyebrow::before{width:28px}
+  .hero-copy,.hero-visual{transform:none;opacity:1}
+  .cue{display:none}
 }
 </style>
 </head>
 <body class="no-js">
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
 
 <header id="top">
   <div class="wrap nav">
@@ -268,7 +307,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   <!-- HERO -->
   <section class="hero" aria-labelledby="h1">
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-copy">
         <div class="badge reveal"><b></b>Automation & AI Specialist · Open to freelance work</div>
         <h1 id="h1" class="reveal" style="--d:.08s">Turning manual operations into <span class="grad">reliable automated workflows.</span></h1>
         <p class="sub reveal" style="--d:.16s">I design and build n8n workflows, AI-powered processes, and API integrations that connect your spreadsheets, tools, and data, with structured outputs you can trust.</p>
@@ -302,7 +341,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
           </div>
         </div>
 
-        <div class="flow reveal" style="--d:.32s" role="img" aria-label="Diagram of an automation pipeline: Google Sheets trigger, n8n workflow, AI model, validated output written back to Sheets">
+        <div class="flow reveal stagger" style="--d:.32s" role="img" aria-label="Diagram of an automation pipeline: Google Sheets trigger, n8n workflow, AI model, validated output written back to Sheets">
           <div class="flow-bar"><i></i><i></i><i></i><span>pipeline.workflow</span></div>
           <div class="node"><div class="ic">01</div><div><strong>Google Sheets</strong><small>New row / trigger</small></div></div>
           <div class="link"></div>
@@ -316,12 +355,13 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
         </div>
       </div>
     </div>
+    <a class="cue" href="#about" aria-label="Scroll to About"><span>Scroll</span><i></i></a>
   </section>
 
   <!-- ABOUT -->
   <section id="about" aria-labelledby="about-h">
     <div class="wrap about-grid">
-      <div class="reveal">
+      <div class="reveal" data-reveal="left">
         <div class="eyebrow">About</div>
         <h2 id="about-h">Engineering-minded automation, built around clear inputs and outputs.</h2>
         <p class="lead" style="margin-top:22px">I'm an Automation & AI Specialist who works at the intersection of operations and engineering. I build workflows that are structured, predictable, and easy to maintain, with AI added where it fits, not for show.</p>
@@ -332,7 +372,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
           <span>Expected graduation: 2027</span>
         </div>
       </div>
-      <ul class="focus reveal" style="--d:.12s" aria-label="Main focus areas">
+      <ul class="focus stagger" aria-label="Main focus areas">
         <li>Workflow Automation</li>
         <li>AI Automation</li>
         <li>n8n</li>
@@ -352,17 +392,17 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
         <h2 id="services-h">What I can build for you</h2>
       </div>
       <div class="cards">
-        <article class="card reveal">
+        <article class="card reveal" data-reveal="scale">
           <span class="num">01</span>
           <h3>Workflow Automation</h3>
           <p>Automating repetitive operational tasks and connecting the tools involved in your business processes.</p>
         </article>
-        <article class="card reveal" style="--d:.1s">
+        <article class="card reveal" data-reveal="scale" style="--d:.12s">
           <span class="num">02</span>
           <h3>AI-Powered Workflows</h3>
           <p>Integrating AI models into structured workflows with clear inputs, outputs, parsing, and validation.</p>
         </article>
-        <article class="card reveal" style="--d:.2s">
+        <article class="card reveal" data-reveal="scale" style="--d:.24s">
           <span class="num">03</span>
           <h3>Data & API Integration</h3>
           <p>Connecting APIs, spreadsheets, databases, and business systems to streamline the flow of data.</p>
@@ -379,31 +419,31 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
         <h2 id="projects-h">Systems I've designed and built</h2>
       </div>
       <div class="projects">
-        <article class="project reveal">
-          <div class="big" aria-hidden="true">01</div>
+        <article class="project reveal" data-reveal="scale">
+          <div class="big" data-speed="-0.05" aria-hidden="true">01</div>
           <div>
             <span class="tag">Project 01 · AI Automation</span>
             <h3>AI Resume Automation System</h3>
             <p>An n8n pipeline that analyzes job descriptions and tailors resumes, preserving factual accuracy and formatting. It combines Google Sheets, external APIs, OpenRouter AI, and LaTeX.</p>
-            <ul class="chips" aria-label="Technologies"><li>n8n</li><li>Google Sheets</li><li>APIs</li><li>OpenRouter AI</li><li>LaTeX</li></ul>
+            <ul class="chips stagger" aria-label="Technologies"><li>n8n</li><li>Google Sheets</li><li>APIs</li><li>OpenRouter AI</li><li>LaTeX</li></ul>
           </div>
         </article>
-        <article class="project reveal">
-          <div class="big" aria-hidden="true">02</div>
+        <article class="project reveal" data-reveal="scale">
+          <div class="big" data-speed="-0.05" aria-hidden="true">02</div>
           <div>
             <span class="tag">Project 02 · AI Workflow</span>
             <h3>AI Message Processor</h3>
             <p>An automation that reads customer messages from Google Sheets, processes them through an AI API, parses the structured JSON response, and updates each record with its classification result.</p>
-            <ul class="chips" aria-label="Technologies"><li>Google Sheets</li><li>AI API</li><li>JSON Parsing</li><li>Automation</li></ul>
+            <ul class="chips stagger" aria-label="Technologies"><li>Google Sheets</li><li>AI API</li><li>JSON Parsing</li><li>Automation</li></ul>
           </div>
         </article>
-        <article class="project reveal">
-          <div class="big" aria-hidden="true">03</div>
+        <article class="project reveal" data-reveal="scale">
+          <div class="big" data-speed="-0.05" aria-hidden="true">03</div>
           <div>
             <span class="tag">Project 03 · Data Engineering</span>
             <h3>Job Market Data Pipeline</h3>
             <p>A graduation project pipeline that collects job-market data through the JSearch API, processes it, stores it, and prepares it for analysis.</p>
-            <ul class="chips" aria-label="Technologies"><li>JSearch API</li><li>Data Processing</li><li>Data Storage</li><li>Analysis-ready Data</li></ul>
+            <ul class="chips stagger" aria-label="Technologies"><li>JSearch API</li><li>Data Processing</li><li>Data Storage</li><li>Analysis-ready Data</li></ul>
             <p class="note">University graduation project.</p>
           </div>
         </article>
@@ -421,15 +461,15 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
       <div class="skill-groups">
         <div class="group reveal">
           <h3>Automation & AI</h3>
-          <ul><li>n8n</li><li>Google Sheets</li><li>APIs</li><li>AI Automation</li></ul>
+          <ul class="stagger"><li>n8n</li><li>Google Sheets</li><li>APIs</li><li>AI Automation</li></ul>
         </div>
-        <div class="group reveal" style="--d:.1s">
+        <div class="group reveal" style="--d:.12s">
           <h3>Data</h3>
-          <ul><li>Data Engineering</li><li>Structured Data Processing</li><li>SQL</li></ul>
+          <ul class="stagger"><li>Data Engineering</li><li>Structured Data Processing</li><li>SQL</li></ul>
         </div>
-        <div class="group reveal" style="--d:.2s">
+        <div class="group reveal" style="--d:.24s">
           <h3>Programming</h3>
-          <ul><li>Python</li><li>JavaScript</li><li>C++</li><li>Angular</li><li>MATLAB</li></ul>
+          <ul class="stagger"><li>Python</li><li>JavaScript</li><li>C++</li><li>Angular</li><li>MATLAB</li></ul>
         </div>
       </div>
     </div>
@@ -443,10 +483,10 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
         <h2 id="exp-h">Where I apply this work</h2>
       </div>
       <div class="timeline">
-        <article class="job reveal">
+        <article class="job reveal" data-reveal="right">
           <h3>Automation & Operations Specialist</h3>
           <p>Hands-on automation and operations work across tools, data, and AI-powered processes.</p>
-          <ul>
+          <ul class="stagger">
             <li>Workflow automation</li>
             <li>Google Sheets automation</li>
             <li>n8n</li>
@@ -462,7 +502,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   <!-- CONTACT -->
   <section id="contact" aria-labelledby="contact-h">
     <div class="wrap">
-      <div class="cta reveal">
+      <div class="cta reveal" data-reveal="scale">
         <div class="eyebrow" style="justify-content:center">Contact</div>
         <h2 id="contact-h">Have a process that should run itself?</h2>
         <p class="lead">Tell me about the workflow, the tools involved, and what you want to improve. I'll help you work out a clean, reliable way to automate it.</p>
@@ -486,8 +526,32 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
 
 <script>
 (function(){
-  var d=document, b=d.body;
+  var d=document, root=d.documentElement, b=d.body;
   b.classList.remove('no-js');
+
+  var mqReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var mqWide=window.matchMedia('(min-width: 961px)');
+  var reduce=mqReduce.matches;
+  var hasIO='IntersectionObserver' in window;
+
+  // Split headings into words (masked slide-up reveal)
+  d.querySelectorAll('h2').forEach(function(h){
+    var words=h.textContent.trim().split(/\s+/);
+    h.classList.add('split');
+    h.setAttribute('aria-label',words.join(' '));
+    h.textContent='';
+    words.forEach(function(w,i){
+      var o=d.createElement('span'); o.className='w'; o.setAttribute('aria-hidden','true');
+      var s=d.createElement('span'); s.style.setProperty('--i',i); s.textContent=w;
+      o.appendChild(s); h.appendChild(o);
+      if(i<words.length-1) h.appendChild(d.createTextNode(' '));
+    });
+  });
+
+  // Stagger indices
+  d.querySelectorAll('.stagger').forEach(function(el){
+    [].forEach.call(el.children,function(c,i){c.style.setProperty('--i',i)});
+  });
 
   // Header state
   var header=d.querySelector('header');
@@ -502,9 +566,9 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   d.addEventListener('keydown',function(e){if(e.key==='Escape'){setMenu(false);burger.focus()}});
   window.addEventListener('resize',function(){if(window.innerWidth>820)setMenu(false)});
 
-  // Reveal on scroll
-  var items=d.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
+  // Reveal on scroll (one-shot)
+  var items=d.querySelectorAll('.reveal,.stagger');
+  if(hasIO){
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
     },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
@@ -514,7 +578,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
   // Active nav link
   var links=[].slice.call(menu.querySelectorAll('a'));
   var secs=links.map(function(a){return d.querySelector(a.getAttribute('href'))});
-  if('IntersectionObserver' in window){
+  if(hasIO){
     var so=new IntersectionObserver(function(es){
       es.forEach(function(e){
         if(e.isIntersecting){
@@ -523,6 +587,52 @@ footer{border-top:1px solid var(--border);padding:32px 0;color:var(--dim);font-s
       });
     },{rootMargin:'-45% 0px -50% 0px'});
     secs.forEach(function(s){if(s)so.observe(s)});
+  }
+
+  // Scroll-linked effects (progress bar, hero parallax, timeline fill, CTA glow, number drift)
+  var hero=d.querySelector('.hero'), tl=d.querySelector('.timeline'), cta=d.querySelector('.cta');
+  var drift=[].slice.call(d.querySelectorAll('[data-speed]'));
+  var vh=window.innerHeight, ticking=false;
+  function clamp(v,a,z){return Math.min(z,Math.max(a,v))}
+  function update(){
+    ticking=false;
+    var y=window.scrollY, max=root.scrollHeight-vh;
+    var fx=!reduce && mqWide.matches;
+    root.style.setProperty('--sp',max>0?clamp(y/max,0,1).toFixed(4):0);
+    root.style.setProperty('--sy',fx?Math.min(y,1400):0);
+    hero.style.setProperty('--hp',fx?clamp(y/(hero.offsetHeight*.75),0,1).toFixed(4):0);
+    if(tl){
+      var r=tl.getBoundingClientRect();
+      tl.style.setProperty('--tp',reduce?1:clamp((vh*.75-r.top)/r.height,0,1).toFixed(4));
+    }
+    if(cta && !reduce){
+      var c=cta.getBoundingClientRect();
+      cta.style.setProperty('--cp',clamp((vh-c.top)/(vh+c.height),0,1).toFixed(4));
+    }
+    drift.forEach(function(el){
+      if(!fx){el.style.transform='';return}
+      var p=el.parentElement.getBoundingClientRect();
+      if(p.bottom<-300||p.top>vh+300)return;
+      el.style.transform='translate3d(0,'+((p.top+p.height/2-vh/2)*parseFloat(el.getAttribute('data-speed'))).toFixed(1)+'px,0)';
+    });
+  }
+  function req(){if(!ticking){ticking=true;window.requestAnimationFrame(update)}}
+  window.addEventListener('scroll',req,{passive:true});
+  window.addEventListener('resize',function(){vh=window.innerHeight;req()});
+  update();
+
+  // Pipeline: nodes light up in sequence while visible
+  var nodes=[].slice.call(d.querySelectorAll('.flow .node'));
+  var flow=d.querySelector('.flow');
+  if(hasIO && flow && nodes.length && !reduce){
+    var idx=0, timer=null;
+    var tick=function(){nodes.forEach(function(n,k){n.classList.toggle('on',k===idx)});idx=(idx+1)%nodes.length};
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting && !timer){tick();timer=setInterval(tick,1300)}
+        else if(!e.isIntersecting && timer){clearInterval(timer);timer=null}
+      });
+    }).observe(flow);
   }
 
   // Card spotlight
